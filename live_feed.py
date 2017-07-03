@@ -44,7 +44,7 @@ import numpy as np
 myo.init()  # Init doesn't like being rerun
 
 
-# In[2]:
+# In[ ]:
 
 
 class MyoListener(myo.DeviceListener):
@@ -64,8 +64,8 @@ class MyoListener(myo.DeviceListener):
 
     def on_emg_data(self, device, timestamp, emg_data):
         with self.lock:
+            # Store as tuples, adding from the right
             self.emg_data_queue.append((timestamp, emg_data))  # Timestamp is in ms
-#             self.emg_data_queue.append(emg_data)  # Add to right
 
     def get_emg_data(self):
         with self.lock:
@@ -103,7 +103,7 @@ try:
         raw_data = list(emg_data_ref)
         nb_datapoints = len(raw_data)
         
-        emg_data = [x[1] for x in raw_data]
+        emg_data = [x[1] for x in raw_data]  # Grab EMG data from list of tuples
         x_time = range(-nb_datapoints + 1, 1)
         
         if nb_datapoints > 0:
